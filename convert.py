@@ -31,6 +31,10 @@ def check(fil_tip, fil_tip1):
         elif fil_tip1 == "PDF" or "DOCX":
             return True
 
+def img_conver(path, folder):
+    im = Image.open(img)
+    im.save(f"{img_pat}/phot.{fgil_t}", f"{fil_tip}")
+
 fil_tip = "JPG"
 
 root = tk.Tk()
