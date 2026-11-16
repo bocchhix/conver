@@ -6,6 +6,7 @@ import string
 import ctypes
 import sys
 import pdf2docx
+import imghdr
 
 def is_admin():
     try:
@@ -31,9 +32,15 @@ def check(fil_tip, fil_tip1):
         elif fil_tip1 == "PDF" or "DOCX":
             return True
 
-def img_conver(path, folder):
+def img_conver(img, folder):
+    if imghdr.what(img) == "jpg":
+        fileTyp = "JPEG"
+    elif imghdr.what(img) == "png":
+        fileTyp = "PNG"
+    elif imghdr.what(img) == "webp":
+        fileTyp = "WEBP"
     im = Image.open(img)
-    im.save(f"{img_pat}/phot.{fgil_t}", f"{fil_tip}")
+    im.save(f"{folder}/phot.{fileTyp}", f"{path}")
 
 fil_tip = "JPG"
 

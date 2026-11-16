@@ -6,18 +6,6 @@ import string
 import ctypes
 import sys
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
-
-if not is_admin():
-    ctypes.windll.shell32.ShellExecuteW(
-        None, "runas", sys.executable, " ".join(sys.argv), None, 1
-    )
-    sys.exit()
-
 def fileOpen():
     file = filedialog.askopenfilename(title="Select a file", filetypes=[("JPG files", "*.jpg"), ("PNG files", "*.png"), ("WEBP files", "*.webp")])
     fileEntry.delete(0, tk.END)
@@ -45,22 +33,23 @@ folderEntryButton.pack()
 filenameEntry = tk.Entry(root)
 filenameEntry.pack()
 
-def imageConversion(file, folder, filename):
-    file = fileEntry.get()
-    folder = folderEntry.get()
-    filename = filenameEntry.get()
+outputfiletypeFormats = ["PNG", "JPEG", "WEBP", "BMP"]
+outputfiletypeEntry = ttk.Combobox(root, values=outputfiletypeFormats, state="readonly")
+outputfiletypeEntry.current(0)
+outputfiletypeEntry.pack()
+
+def imageConversion(file, folder, filename, outputfiletype):
     openImage = Image.open(file)
-    filTyp = Image.open(file).format()
-    if imghdr.what(img) == "jpg":
-        fileTyp = "JPEG"
-    elif imghdr.what(img) == "png":
-        fileTyp = "PNG"
-    elif imghdr.what(img) == "webp":
-        fileTyp = "WEBP"
-    openImage.save(f"{folder}/{filename}.{imghdr.what(file)}", f"{fileTyp}")
+    filTyp = Image.open(file).format
+    openImage.save(f"{folder}/{filename}.{outputfiletype}", f"{filTyp}")
 
 def buttonConv():
-    imageConversion(file, folder, filename)
+    file = fileEntry.get()
+    file = str(file)
+    folder = folderEntry.get()
+    filename = filenameEntry.get()
+    outputfiletype = outputfiletypeEntry.get()
+    imageConversion(file, folder, filename, outputfiletype)
 
 converButton = tk.Button(root, command=buttonConv)
 converButton.pack()
