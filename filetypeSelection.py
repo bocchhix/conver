@@ -12,7 +12,7 @@ def opent():
     filetypeR = fileType.get()
     if filetypeR == "image":
         os.startfile("imagemain.py")
-    if filetypeR == "image":
+    if filetypeR == "pdf":
         os.startfile("pdfmain.py")
 
 button = tk.Button(root, command=opent)
